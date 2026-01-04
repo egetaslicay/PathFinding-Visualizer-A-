@@ -22,5 +22,20 @@ class Spot:
     def __init___(self, row, col, width, total_rows): 
         self.row = row
         self.col = col 
+        self.width = width
         self.x = row * width 
         self.y = col * width
+        # sidenote, for self.x and self.y, 
+        # we can get these coordinate points since we multiply the size of each of the cubes until we get to the row or column we want 
+
+        self.neighbours = []
+        self.total_rows = total_rows
+    
+    def get_pos(self): 
+        return self.row, self.col
+    
+    def is_closed(self): 
+        return self.color == RED
+    
+    
+    
