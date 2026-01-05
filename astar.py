@@ -25,8 +25,8 @@ class Spot:
         self.row = row
         self.col = col 
         self.width = width
-        self.x = row * width 
-        self.y = col * width
+        self.x = col * width 
+        self.y = row * width
         # sidenote, for self.x and self.y, 
         # we can get these coordinate points since we multiply the size of each of the cubes until we get to the row or column we want 
 
@@ -89,7 +89,7 @@ class Spot:
         if self.col < self.total_rows - 1 and not grid[self.row][self.col+1].is_barrier(): # RIGHT
             self.neighbors.append(grid[self.row][self.col + 1])
 
-        if self.col < 0 and not grid[self.row][self.col - 1].is_barrier(): # LEFT
+        if self.col > 0 and not grid[self.row][self.col - 1].is_barrier(): # LEFT
             self.neighbors.append(grid[self.row][self.col - 1])
 
     
@@ -142,9 +142,14 @@ def algorithm(draw, grid, start, end):
                     count += 1
                     open_set.put((f_score[neighbor], count, neighbor))
                     open_set_hash.add(neighbor)
-                    neighbor.make_closed() 
-                    
+                    neighbor.make_open()
 
+        draw()
+
+        if current != start: 
+            current.make_closed()
+
+    return False
 
 
 
@@ -181,7 +186,7 @@ def draw(win, grid, rows, width):
 
 def get_clicked_pos(pos, rows, width): 
     gap = width // rows 
-    y,x = pos 
+    x,y = pos 
 
     row = y // gap 
     col = x // gap
@@ -241,9 +246,9 @@ def main(win, width):
                 if event.key == pygame.K_SPACE and not started: 
                     for row in grid: 
                         for spot in row: 
-                            spot.update_neighbors()
+                            spot.update_neighbors(grid)
                           
-                        algorithm(lambda: draw (win, grid, ROWS, width), grid, start, end)
+                    algorithm(lambda: draw (win, grid, ROWS, width), grid, start, end)
                         
     pygame.quit()
 
