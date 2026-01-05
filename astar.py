@@ -96,14 +96,24 @@ class Spot:
     def __lt__(self,other): 
         return False
 
-
-
-    
-
-def heuristic(p1, p2):  ## !!using manhattan distance function (basically the quickest L shape from one point to another since we cannot move in diagonals on grid)
+def h(p1, p2):  ## !!using manhattan distance function (basically the quickest L shape from one point to another since we cannot move in diagonals on grid)
     x1, y1 = p1
     x2, y2 = p2
     return abs(x1 - x2) + abs(y1 - y2)
+
+def algorithm(draw, grid, start, end):  
+    count = 0 
+    
+    open_set = PriorityQueue() 
+    open_set.put((0, count, start))
+    
+    came_from = {}
+    
+    g_score = {spot: float("inf") for row in grid for spot in row}
+    g_score[start] = 0
+
+    f_score = {spot: float("inf") for row in grid for spot in row}
+    f_score[start] = h(start.get_pos(), end.get_pos())
 
 
 def make_grid(rows, width): 
@@ -195,8 +205,12 @@ def main(win, width):
 
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_SPACE and not started: 
-
-                
+                    for row in grid: 
+                        for spot in row: 
+                            spot.update_neighbors()
+                          
+                        algorithm(lambda: draw (win, grid, ROWS, width), grid, start, end)
+                        
     pygame.quit()
 
     
