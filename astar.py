@@ -8,7 +8,7 @@ pygame.display.set_caption("A* Path Finding Algorithm")
 
 RED = (255, 0, 0)
 GREEN = (0,255, 0)
-BLUE = (0, 255, 0)
+BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)
@@ -18,7 +18,7 @@ GREY = (128, 128, 128)
 TURQUOISE = (64, 224, 208)
 
 class Spot: 
-    def __init___(self, row, col, width, total_rows): 
+    def __init__(self, row, col, width, total_rows):        
         self.row = row
         self.col = col 
         self.width = width
@@ -27,7 +27,7 @@ class Spot:
         # sidenote, for self.x and self.y, 
         # we can get these coordinate points since we multiply the size of each of the cubes until we get to the row or column we want 
 
-        self.neighbours = []    
+        self.neighbors = []    
         self.total_rows = total_rows
     
     def get_pos(self): 
@@ -69,7 +69,7 @@ class Spot:
     def draw(self, win): 
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width)) 
 
-    def update_neightbors(self, grid): 
+    def update_neighbors(self, grid): 
         pass
 
     def __lt__(self,other): 
@@ -110,6 +110,15 @@ def draw(win, grid, rows, width):
     draw_grid(win, rows, width)
     pygame.display.update()
 
+
+def get_clicked_pos(pos, rows, width): 
+    gap = width // rows 
+    y,x = pos 
+
+    row = y // gap 
+    col = x // gap
+
+    return row, col
 
 
 
