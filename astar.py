@@ -134,6 +134,7 @@ def main(win, width):
     started = False 
 
     while run: 
+        draw(win, grid, ROWS, width)
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
                 run = False
@@ -166,7 +167,7 @@ def main(win, width):
     pygame.quit()
 
     
-main()
+main(WIN, WIDTH)
 
 
 
