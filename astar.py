@@ -1,6 +1,8 @@
 import pygame
+pygame.init()
 import math 
 from queue import PriorityQueue
+
 
 WIDTH = 800
 WIN = pygame.display.set_mode((WIDTH, WIDTH)) 
@@ -19,6 +21,7 @@ TURQUOISE = (64, 224, 208)
 
 class Spot: 
     def __init__(self, row, col, width, total_rows):        
+        self.color = WHITE  
         self.row = row
         self.col = col 
         self.width = width
@@ -99,9 +102,9 @@ def make_grid(rows, width):
 def draw_grid(win, rows, width): 
     gap = width // rows
     for i in range(rows): 
-        pygame.draw.line(win, GREY (0, i * gap), (width, i * gap))
+        pygame.draw.line(win, GREY, (0, i * gap), (width, i * gap))
         for j in range (rows): 
-            pygame.draw.line(win, GREY (j * gap, 0), (j* gap, width))
+            pygame.draw.line(win, GREY, (j * gap, 0), (j* gap, width))
 
 def draw(win, grid, rows, width): 
     win.fill(WHITE)
@@ -162,7 +165,14 @@ def main(win, width):
 
 
             elif pygame.mouse.get_pressed()[2]: # right mouse btn 
-                pass
+                pos = pygame.mouse.get_pos()
+                row, col = get_clicked_pos(pos, ROWS, width)
+                spot = grid[row][col]
+                spot.reset() 
+                if spot == start: 
+                    start = None
+                elif spot == end: 
+                    end = None
 
     pygame.quit()
 
