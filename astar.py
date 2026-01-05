@@ -101,6 +101,13 @@ def h(p1, p2):  ## !!using manhattan distance function (basically the quickest L
     x2, y2 = p2
     return abs(x1 - x2) + abs(y1 - y2)
 
+def reconstruct_path(came_from, current, draw): 
+    while current in came_from: 
+        current = came_from[current]
+        current.make_path()
+        draw()
+
+
 def algorithm(draw, grid, start, end):  
     count = 0 
     
@@ -126,7 +133,8 @@ def algorithm(draw, grid, start, end):
         open_set_hash.remove(current)
 
         if current == end: 
-            pass # make path
+            reconstruct_path(came_from, end, draw)
+            end.make_end()
             return True
 
         for neighbor in current.neighbors: 
@@ -249,7 +257,12 @@ def main(win, width):
                             spot.update_neighbors(grid)
                           
                     algorithm(lambda: draw (win, grid, ROWS, width), grid, start, end)
-                        
+                
+                if event.key == pygame.K_c: 
+                    start = None
+                    end = None
+                    grid = make_grid(ROWS, width)
+
     pygame.quit()
 
     
