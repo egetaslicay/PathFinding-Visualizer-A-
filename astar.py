@@ -15,7 +15,7 @@ def reconstruct_path(came_from, current, draw):
         current = came_from[current]
         current.make_path()
         draw()
-
+ 
 
 def algorithm(draw, grid, start, end):  
     count = 0 
@@ -44,6 +44,7 @@ def algorithm(draw, grid, start, end):
         if current == end: 
             reconstruct_path(came_from, end, draw)
             end.make_end()
+            start.make_start()
             return True
 
         for neighbor in current.neighbors: 
@@ -63,7 +64,7 @@ def algorithm(draw, grid, start, end):
 
         draw()
 
-        if current != start: 
+        if current != start and current != end: 
             current.make_closed()
 
     return False
