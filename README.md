@@ -1,6 +1,6 @@
 # A* Pathfinding Visualizer (Pygame)
 
-A simple interactive visualization of the **A\*** pathfinding algorithm built using **Python** and **Pygame**.  
+This is a simple and fun interactive visualization of the **A\*** pathfinding algorithm built using **Python** and **Pygame**.  
 This project allows users to place a start node, an end node, barriers, and visually see how A\* explores the grid to find the shortest path.
 
 ---
@@ -41,6 +41,3 @@ This project allows users to place a start node, an end node, barriers, and visu
   - Exit the program
 
 ---
-
-## Project Structure
-
