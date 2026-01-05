@@ -115,6 +115,40 @@ def algorithm(draw, grid, start, end):
     f_score = {spot: float("inf") for row in grid for spot in row}
     f_score[start] = h(start.get_pos(), end.get_pos())
 
+    open_set_hash = {start}
+
+    while not open_set.empty(): 
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                pygame.quit()
+
+        current = open_set.get()[2] # index 2 since we only want the node. 
+        open_set_hash.remove(current)
+
+        if current == end: 
+            pass # make path
+            return True
+
+        for neighbor in current.neighbors: 
+            temp_g_score = g_score[current] + 1  # assuming all the neighbours are 1 away from the node
+            
+            if temp_g_score < g_score[neighbor]: 
+                
+                came_from[neighbor] = current
+                g_score[neighbor] = temp_g_score
+                f_score[neighbor] = temp_g_score + h(neighbor.get_pos(), end.get_pos())
+                
+                if neighbor not in open_set_hash: 
+                    count += 1
+                    open_set.put((f_score[neighbor], count, neighbor))
+                    open_set_hash.add(neighbor)
+                    neighbor.make_closed() 
+                    
+
+
+
+
+
 
 def make_grid(rows, width): 
     grid = []
